@@ -1,0 +1,14 @@
+{
+    "extends": "tslint:recommended",
+    "defaultSeverity": "error",
+    "rules": {
+        "no-console": {
+            "severity": "warning",
+            "options": ["debug", "info", "trace"]
+        },
+        "@typescript-eslint/no-shadowed-variable": ["error", { "originalKeywordKind": "foo" }]
+      },
+    "jsRules": {
+
+    }
+}
