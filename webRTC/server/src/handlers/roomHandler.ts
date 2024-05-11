@@ -9,12 +9,12 @@ const roomHandler = (socket: Socket) => {
         const roomId = UUIDv4(); // this will be our unique room id in which multiple connection will exchange
         socket.join(roomId);
 
-        rooms[roomId] = []; 
+        rooms[roomId] = [];
         socket.emit("room-created",{roomId});
         console.log("room created with Id ", {roomId});
     }
     /**
-     * 
+     *
      * The below function is executed everytime a user or create joins the room
      */
     const joinedRoom = ({roomId, peerId}: IRoomParams) => {
@@ -22,13 +22,16 @@ const roomHandler = (socket: Socket) => {
         if(rooms[roomId]){
             rooms[roomId].push(peerId);
             socket.join(roomId);
+            socket.on("ready", () => {
+                console.log("received ready event");
+                socket.to(roomId).emit("user-joined", {peerId});
+            })
             socket.emit("get-users",{
-                roomId: roomId,
+                roomId,
                 participants: rooms[roomId]
             });
+            console.log("New user has joined room", roomId, peerId);
         }
-
-        console.log("New user has joined room", roomId, peerId);
     }
 
     // When to call the above two functions

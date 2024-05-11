@@ -26,6 +26,7 @@ io.on("connection", (socket) => {
     console.log("New User Connected");
     roomHandler(socket); // pass the socket conn to the room handler for room connection and joining
     socket.on("disconnect",() => {
+        socket.emit("disconnected");
         console.log("User disconnected");
     })
 })
