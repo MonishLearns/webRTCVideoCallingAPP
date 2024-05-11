@@ -59,7 +59,6 @@ export const SocketProvider: React.FC<props> = ({ children })=> {
          if(!user || !stream) return;
 
          socket.on("user-joined", ({peerId}) => {
-            console.log("monish");
             const call = user.call(peerId,stream);
             call.on("stream", () => {
                 dispatch(addPeerAction(peerId, stream));
